@@ -8,6 +8,7 @@ namespace InventoryManagementSystem
 {
     internal class Inventory
     {
+        // Properties
         public string Name { get; set; }
         public string Description { get; set; }
         public int Quantity { get; set; }
@@ -16,6 +17,7 @@ namespace InventoryManagementSystem
         public string Supplier { get; set; }
         public string Date { get; set; }
 
+        // Constructor
         public Inventory(string name, string description, int quantity, double price, string category, string supplier, string date)
         {
             this.Name = name;
@@ -27,9 +29,22 @@ namespace InventoryManagementSystem
             this.Date = date;
         }
 
+        // Override ToString method
         public override string ToString()
         {
             return Name;
+        }
+
+        // Update items
+        public void updateItems(string newName, string newDescription, int newQuantity, double newPrice, string newCategory, string newSupplier, string newDate)
+        {
+            this.Name = newName;
+            this.Description = newDescription;
+            this.Quantity = newQuantity;
+            this.Price = newPrice;
+            this.Category = newCategory;
+            this.Supplier = newSupplier;
+            this.Date = newDate;
         }
     }
 }

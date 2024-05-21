@@ -50,8 +50,15 @@
             label2 = new Label();
             label1 = new Label();
             editPage = new TabPage();
+            deleteBtn = new Button();
+            editQuantity = new NumericUpDown();
+            editSupplier = new TextBox();
             updateButton = new Button();
+            editDate = new DateTimePicker();
+            editCategory = new ComboBox();
             editDescription = new TextBox();
+            editPrice = new TextBox();
+            editName = new TextBox();
             label9 = new Label();
             label10 = new Label();
             label11 = new Label();
@@ -60,17 +67,12 @@
             label14 = new Label();
             label15 = new Label();
             label16 = new Label();
-            editDate = new DateTimePicker();
-            editSupplier = new ListBox();
-            editCategory = new ComboBox();
-            editPrice = new TextBox();
-            editQuantity = new TextBox();
-            editName = new TextBox();
             tabControl1.SuspendLayout();
             showPage.SuspendLayout();
             addPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)addQuantity).BeginInit();
             editPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)editQuantity).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -153,6 +155,7 @@
             cancelButton.TabIndex = 19;
             cancelButton.Text = "Cancel";
             cancelButton.UseVisualStyleBackColor = true;
+            cancelButton.Click += cancelButton_Click;
             // 
             // addButton
             // 
@@ -287,13 +290,14 @@
             // 
             // editPage
             // 
+            editPage.Controls.Add(deleteBtn);
+            editPage.Controls.Add(editQuantity);
+            editPage.Controls.Add(editSupplier);
             editPage.Controls.Add(updateButton);
             editPage.Controls.Add(editDate);
-            editPage.Controls.Add(editSupplier);
             editPage.Controls.Add(editCategory);
             editPage.Controls.Add(editDescription);
             editPage.Controls.Add(editPrice);
-            editPage.Controls.Add(editQuantity);
             editPage.Controls.Add(editName);
             editPage.Controls.Add(label9);
             editPage.Controls.Add(label10);
@@ -311,14 +315,54 @@
             editPage.Text = "Edit Inventory";
             editPage.UseVisualStyleBackColor = true;
             // 
+            // deleteBtn
+            // 
+            deleteBtn.Location = new Point(467, 418);
+            deleteBtn.Name = "deleteBtn";
+            deleteBtn.Size = new Size(95, 28);
+            deleteBtn.TabIndex = 36;
+            deleteBtn.Text = "Delete";
+            deleteBtn.UseVisualStyleBackColor = true;
+            deleteBtn.Click += deleteBtn_Click;
+            // 
+            // editQuantity
+            // 
+            editQuantity.Location = new Point(124, 142);
+            editQuantity.Name = "editQuantity";
+            editQuantity.Size = new Size(120, 23);
+            editQuantity.TabIndex = 35;
+            // 
+            // editSupplier
+            // 
+            editSupplier.Location = new Point(549, 141);
+            editSupplier.Name = "editSupplier";
+            editSupplier.Size = new Size(151, 23);
+            editSupplier.TabIndex = 34;
+            // 
             // updateButton
             // 
-            updateButton.Location = new Point(317, 418);
+            updateButton.Location = new Point(166, 418);
             updateButton.Name = "updateButton";
             updateButton.Size = new Size(95, 28);
             updateButton.TabIndex = 33;
             updateButton.Text = "Update";
             updateButton.UseVisualStyleBackColor = true;
+            updateButton.Click += updateButton_Click;
+            // 
+            // editDate
+            // 
+            editDate.Location = new Point(549, 199);
+            editDate.Name = "editDate";
+            editDate.Size = new Size(200, 23);
+            editDate.TabIndex = 32;
+            // 
+            // editCategory
+            // 
+            editCategory.FormattingEnabled = true;
+            editCategory.Location = new Point(549, 86);
+            editCategory.Name = "editCategory";
+            editCategory.Size = new Size(135, 23);
+            editCategory.TabIndex = 30;
             // 
             // editDescription
             // 
@@ -327,6 +371,20 @@
             editDescription.Name = "editDescription";
             editDescription.Size = new Size(639, 102);
             editDescription.TabIndex = 29;
+            // 
+            // editPrice
+            // 
+            editPrice.Location = new Point(110, 199);
+            editPrice.Name = "editPrice";
+            editPrice.Size = new Size(151, 23);
+            editPrice.TabIndex = 28;
+            // 
+            // editName
+            // 
+            editName.Location = new Point(110, 88);
+            editName.Name = "editName";
+            editName.Size = new Size(151, 23);
+            editName.TabIndex = 26;
             // 
             // label9
             // 
@@ -408,51 +466,6 @@
             label16.TabIndex = 18;
             label16.Text = "Edit Inventory";
             // 
-            // editDate
-            // 
-            editDate.Location = new Point(549, 199);
-            editDate.Name = "editDate";
-            editDate.Size = new Size(200, 23);
-            editDate.TabIndex = 32;
-            // 
-            // editSupplier
-            // 
-            editSupplier.FormattingEnabled = true;
-            editSupplier.ItemHeight = 15;
-            editSupplier.Location = new Point(549, 139);
-            editSupplier.Name = "editSupplier";
-            editSupplier.Size = new Size(135, 34);
-            editSupplier.TabIndex = 31;
-            // 
-            // editCategory
-            // 
-            editCategory.FormattingEnabled = true;
-            editCategory.Location = new Point(549, 86);
-            editCategory.Name = "editCategory";
-            editCategory.Size = new Size(135, 23);
-            editCategory.TabIndex = 30;
-            // 
-            // editPrice
-            // 
-            editPrice.Location = new Point(110, 199);
-            editPrice.Name = "editPrice";
-            editPrice.Size = new Size(151, 23);
-            editPrice.TabIndex = 28;
-            // 
-            // editQuantity
-            // 
-            editQuantity.Location = new Point(124, 139);
-            editQuantity.Name = "editQuantity";
-            editQuantity.Size = new Size(151, 23);
-            editQuantity.TabIndex = 27;
-            // 
-            // editName
-            // 
-            editName.Location = new Point(110, 88);
-            editName.Name = "editName";
-            editName.Size = new Size(151, 23);
-            editName.TabIndex = 26;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -468,6 +481,7 @@
             ((System.ComponentModel.ISupportInitialize)addQuantity).EndInit();
             editPage.ResumeLayout(false);
             editPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)editQuantity).EndInit();
             ResumeLayout(false);
         }
 
@@ -509,10 +523,11 @@
         private TextBox addPrice;
         private NumericUpDown addQuantity;
         private DateTimePicker editDate;
-        private ListBox editSupplier;
         private ComboBox editCategory;
         private TextBox editPrice;
-        private TextBox editQuantity;
         private TextBox editName;
+        private TextBox editSupplier;
+        private NumericUpDown editQuantity;
+        private Button deleteBtn;
     }
 }
