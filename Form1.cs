@@ -6,18 +6,25 @@
 using System;
 using System.Collections;
 using System.Windows.Forms;
+using System.IO;
 
 namespace InventoryManagementSystem
 {
+    public delegate void ItemAddedHandler(string itemName);
     public partial class Form1 : Form
     {
         ArrayList inventoryList = new ArrayList();
+        ArrayList categoryList = new ArrayList();
+        List<int> priceList = new List<int>();
 
+        public event ItemAddedHandler ItemAdded;
         public Form1()
         {
             InitializeComponent();
             InitializeInventoryListView();
             showInventory();
+
+            this.ItemAdded += OnItemAdded;
         }
 
         private void InitializeInventoryListView()
@@ -57,26 +64,42 @@ namespace InventoryManagementSystem
         // Add button click event
         private void addButton_Click(object sender, EventArgs e)
         {
-            var inventory = new Inventory(
-                nameBox.Text,
-                addDescription.Text,
-                Convert.ToInt32(addQuantity.Text),
-                Convert.ToDouble(addPrice.Text),
-                categoryBox.Text,
-                supplierBox.Text,
-                datePicker.Text);
+            // Check if any fields are empty
+            if (string.IsNullOrEmpty(nameBox.Text) || string.IsNullOrEmpty(addDescription.Text) || string.IsNullOrEmpty(addQuantity.Text) || string.IsNullOrEmpty(addPrice.Text) || string.IsNullOrEmpty(categoryBox.Text) || string.IsNullOrEmpty(supplierBox.Text) || string.IsNullOrEmpty(datePicker.Text))
+            {
+                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                var inventory = new Inventory(
+                    nameBox.Text,
+                    addDescription.Text,
+                    Convert.ToInt32(addQuantity.Text),
+                    Convert.ToDouble(addPrice.Text),
+                    categoryBox.Text,
+                    supplierBox.Text,
+                    datePicker.Text
+                );
+                inventoryList.Add(inventory);
+                ListViewItem lvi = new ListViewItem(inventory.Name);
+                lvi.SubItems.Add(inventory.Description);
+                lvi.SubItems.Add(inventory.Quantity.ToString());
+                lvi.SubItems.Add(inventory.Price.ToString());
+                lvi.SubItems.Add(inventory.Category);
+                lvi.SubItems.Add(inventory.Supplier);
+                lvi.SubItems.Add(inventory.Date);
+                listView1.Items.Add(lvi);
 
-            inventoryList.Add(inventory);
-            ListViewItem lvi = new ListViewItem(inventory.Name);
-            lvi.SubItems.Add(inventory.Description);
-            lvi.SubItems.Add(inventory.Quantity.ToString());
-            lvi.SubItems.Add(inventory.Price.ToString());
-            lvi.SubItems.Add(inventory.Category);
-            lvi.SubItems.Add(inventory.Supplier);
-            lvi.SubItems.Add(inventory.Date);
-            listView1.Items.Add(lvi);
+                // Raise the ItemAdded event
+                ItemAdded?.Invoke(inventory.Name);
 
-            tabControl1.SelectedTab = showPage;
+                tabControl1.SelectedTab = showPage;
+            }
+        }
+        // Event handler for the ItemAdded event
+        private void OnItemAdded(string itemName)
+        {
+            MessageBox.Show($"Item '{itemName}' has been added to the inventory.", "Notification", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         // Edit button click event
@@ -121,7 +144,7 @@ namespace InventoryManagementSystem
                 listView1.Items[index].SubItems[4].Text = selectedItem.Category;
                 listView1.Items[index].SubItems[5].Text = selectedItem.Supplier;
                 listView1.Items[index].SubItems[6].Text = selectedItem.Date;
-
+                MessageBox.Show("Item updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tabControl1.SelectedTab = showPage;
             }
         }
@@ -132,6 +155,7 @@ namespace InventoryManagementSystem
             tabControl1.SelectedTab = showPage;
         }
 
+
         // Delete button click event
         private void deleteBtn_Click(object sender, EventArgs e)
         {
@@ -141,7 +165,60 @@ namespace InventoryManagementSystem
                 inventoryList.RemoveAt(index);
                 listView1.Items[index].Remove();
             }
+
+            MessageBox.Show("Item deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             tabControl1.SelectedTab = showPage;
+        }
+
+        private void saveBtn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filter = "Text File|*.txt";
+            saveFileDialog.Title = "Save Inventory List";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
+                {
+                    foreach (Inventory item in inventoryList)
+                    {
+                        sw.WriteLine(item.Name + "," + item.Description + "," + item.Quantity + "," + item.Price + "," + item.Category + "," + item.Supplier + "," + item.Date);
+                    }
+                }
+                MessageBox.Show("Inventory list saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Error saving inventory list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox1.Text))
+            {
+                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                categoryList.Add(textBox1.Text);
+                categoryBox.Items.Add(textBox1.Text);
+                editCategory.Items.Add(textBox1.Text);
+                MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox2.Text))
+            {
+                MessageBox.Show("Please fill in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                supplierBox.Items.Add(textBox2.Text);
+                MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
