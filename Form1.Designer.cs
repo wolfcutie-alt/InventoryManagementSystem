@@ -72,19 +72,21 @@
             label16 = new Label();
             addCategory = new TabPage();
             panel1 = new Panel();
+            linkLabel1 = new LinkLabel();
             button1 = new Button();
             textBox1 = new TextBox();
             label18 = new Label();
             label17 = new Label();
             addSupplier = new TabPage();
             panel2 = new Panel();
+            linkLabel3 = new LinkLabel();
             button2 = new Button();
             textBox2 = new TextBox();
             label19 = new Label();
             label20 = new Label();
             saveFileDialog1 = new SaveFileDialog();
-            linkLabel1 = new LinkLabel();
-            linkLabel2 = new LinkLabel();
+            openFileDialog1 = new OpenFileDialog();
+            button3 = new Button();
             tabControl1.SuspendLayout();
             showPage.SuspendLayout();
             panel3.SuspendLayout();
@@ -114,8 +116,6 @@
             // 
             // showPage
             // 
-            showPage.Controls.Add(linkLabel2);
-            showPage.Controls.Add(linkLabel1);
             showPage.Controls.Add(panel3);
             showPage.Controls.Add(saveBtn);
             showPage.Location = new Point(4, 24);
@@ -166,6 +166,7 @@
             // 
             // panel4
             // 
+            panel4.Controls.Add(button3);
             panel4.Controls.Add(addQuantity);
             panel4.Controls.Add(addPrice);
             panel4.Controls.Add(cancelButton);
@@ -534,6 +535,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(linkLabel1);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(textBox1);
             panel1.Controls.Add(label18);
@@ -542,6 +544,17 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(791, 468);
             panel1.TabIndex = 0;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Location = new Point(315, 274);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(43, 15);
+            linkLabel1.TabIndex = 20;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Cancel";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // button1
             // 
@@ -593,6 +606,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(linkLabel3);
             panel2.Controls.Add(button2);
             panel2.Controls.Add(textBox2);
             panel2.Controls.Add(label19);
@@ -601,6 +615,17 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(791, 468);
             panel2.TabIndex = 1;
+            // 
+            // linkLabel3
+            // 
+            linkLabel3.AutoSize = true;
+            linkLabel3.Location = new Point(332, 299);
+            linkLabel3.Name = "linkLabel3";
+            linkLabel3.Size = new Size(43, 15);
+            linkLabel3.TabIndex = 24;
+            linkLabel3.TabStop = true;
+            linkLabel3.Text = "Cancel";
+            linkLabel3.LinkClicked += linkLabel3_LinkClicked;
             // 
             // button2
             // 
@@ -639,25 +664,19 @@
             label20.TabIndex = 20;
             label20.Text = "Add Supplier";
             // 
-            // linkLabel1
+            // openFileDialog1
             // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(531, 441);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(60, 15);
-            linkLabel1.TabIndex = 3;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "linkLabel1";
+            openFileDialog1.FileName = "openFileDialog1";
             // 
-            // linkLabel2
+            // button3
             // 
-            linkLabel2.AutoSize = true;
-            linkLabel2.Location = new Point(143, 441);
-            linkLabel2.Name = "linkLabel2";
-            linkLabel2.Size = new Size(60, 15);
-            linkLabel2.TabIndex = 4;
-            linkLabel2.TabStop = true;
-            linkLabel2.Text = "linkLabel2";
+            button3.Location = new Point(547, 418);
+            button3.Name = "button3";
+            button3.Size = new Size(95, 28);
+            button3.TabIndex = 40;
+            button3.Text = "Import";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // Form1
             // 
@@ -669,7 +688,6 @@
             Text = "Inventory Management System";
             tabControl1.ResumeLayout(false);
             showPage.ResumeLayout(false);
-            showPage.PerformLayout();
             panel3.ResumeLayout(false);
             addPage.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -746,7 +764,9 @@
         private Label label3;
         private Label label2;
         private Label label1;
-        private LinkLabel linkLabel2;
         private LinkLabel linkLabel1;
+        private LinkLabel linkLabel3;
+        private Button button3;
+        private OpenFileDialog openFileDialog1;
     }
 }

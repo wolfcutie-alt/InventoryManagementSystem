@@ -220,5 +220,46 @@ namespace InventoryManagementSystem
                 MessageBox.Show("Category added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            tabControl1.SelectedTab = showPage;
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            tabControl1.SelectedTab = showPage;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Text File|*.txt";
+            openFileDialog1.Title = "Open Inventory List";
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamReader sr = new StreamReader(openFileDialog1.FileName))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        string[] items = line.Split(',');
+                        inventoryList.Add(new Inventory(items[0], items[1], Convert.ToInt32(items[2]), Convert.ToDouble(items[3]), items[4], items[5], items[6]));
+                        ListViewItem lvi = new ListViewItem(items[0]);
+                        lvi.SubItems.Add(items[1]);
+                        lvi.SubItems.Add(items[2]);
+                        lvi.SubItems.Add(items[3]);
+                        lvi.SubItems.Add(items[4]);
+                        lvi.SubItems.Add(items[5]);
+                        lvi.SubItems.Add(items[6]);
+                        listView1.Items.Add(lvi);
+                    }
+                }
+                MessageBox.Show("Inventory list loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Error loading inventory list.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
